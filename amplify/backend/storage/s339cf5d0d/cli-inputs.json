@@ -1,0 +1,14 @@
+{
+  "resourceName": "s339cf5d0d",
+  "policyUUID": "39cf5d0d",
+  "bucketName": "owncloudbox62c9736ce6e04542a7f6f0d8df2131c3",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
