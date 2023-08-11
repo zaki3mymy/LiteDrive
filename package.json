@@ -2,6 +2,7 @@
   "name": "owncloudbox",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,6 +11,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@aws-amplify/ui-vue": "^3.1.23",
+    "aws-amplify": "^5.3.6",
+    "maplibre-gl": "^2.4.0",
+    "maplibre-gl-js-amplify": "^3.1.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
     "vuetify": "^3.3.12"
