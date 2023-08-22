@@ -1,9 +1,8 @@
-import './assets/main.css'
+// import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import vuetify from './plugins/vuetify'
 
 // Amplify
 import { Amplify } from 'aws-amplify';
@@ -14,10 +13,13 @@ Amplify.configure(awsconfig);
 import AmplifyVue from '@aws-amplify/ui-vue';
 import '@aws-amplify/ui-vue/styles.css';
 
+// Materialize CCS
+import 'materialize-css/dist/css/materialize.min.css'
+import 'material-icons/iconfont/material-icons.css';
+
 const app = createApp(App)
 app.config.productionTip = false;
 
 app.use(router)
-app.use(vuetify)
 app.use(AmplifyVue);
 app.mount('#app')

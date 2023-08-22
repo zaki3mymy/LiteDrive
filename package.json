@@ -15,10 +15,11 @@
     "aws-amplify": "^5.3.6",
     "maplibre-gl": "^2.4.0",
     "maplibre-gl-js-amplify": "^3.1.0",
+    "material-icons": "^1.13.10",
+    "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.29.4",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4",
-    "vuetify": "^3.3.12"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.2",

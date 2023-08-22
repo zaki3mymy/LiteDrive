@@ -12,6 +12,8 @@ import ListObjects from '../components/ListObjects.vue'
 </template>
 
 <script>
+import M from 'materialize-css'
+
 export default {
   components: {
     UploadObject,
@@ -33,6 +35,7 @@ export default {
     }
   },
   mounted() {
+    M.AutoInit();
     // 最初のページ
     this.refresh('/')
   }
