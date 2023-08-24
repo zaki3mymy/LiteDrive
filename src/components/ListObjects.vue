@@ -15,7 +15,7 @@ import { formatDatetime } from "./util/Datetime.vue";
     </thead>
     <tbody>
       <tr v-for="folder in folders" :key="folder">
-        <td>■</td>
+        <td><i class="material-icons">folder</i></td>
         <td>
           <router-link
             :to="'/' + folder + '/'"

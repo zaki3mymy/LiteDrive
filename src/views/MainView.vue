@@ -3,19 +3,25 @@ import UploadObject from '../components/UploadObject.vue'
 import ListObjects from '../components/ListObjects.vue'
 </script>
 <template>
-  <main>
-    <UploadObject></UploadObject>
-    <router-link to="/" v-on:click="refresh('/')">top/</router-link>
-    <span>{{ path }}</span>
-    <ListObjects :keyProp="path" @move="refresh"></ListObjects>
-  </main>
+  <div class="container">
+    <div class="row">
+      <!-- <UploadObject></UploadObject> -->
+      <!-- <router-link to="/" v-on:click="refresh('/')">top/</router-link>
+      <span>{{ path }}</span> -->
+      <div class="col s12">
+        <ListObjects :keyProp="path" @move="refresh"></ListObjects>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import M from 'materialize-css'
+
 export default {
   components: {
     UploadObject,
-    ListObjects
+    ListObjects,
   },
   data() {
     return {
@@ -33,6 +39,7 @@ export default {
     }
   },
   mounted() {
+    M.AutoInit();
     // 最初のページ
     this.refresh('/')
   }
