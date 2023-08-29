@@ -19,7 +19,6 @@ import { formatDatetime } from "./util/Datetime.vue";
         <td>
           <router-link
             :to="'/' + folder + '/'"
-            v-on:click="folderClicked('/' + folder + '/')"
             >{{ folder }}/</router-link
           >
         </td>
@@ -39,7 +38,7 @@ import { formatDatetime } from "./util/Datetime.vue";
 <script>
 export default {
   props: {
-    keyProp: "",
+    keyProp: String,
   },
   emit: ["move"],
   data() {
@@ -50,18 +49,18 @@ export default {
     };
   },
   methods: {
-    folderClicked(path) {
-      this.$emit("move", path);
-    },
     async listObjects(key) {
       // TODO: 階層のみ表示
       this.files = [];
       this.folders = new Set();
 
       this.isFetching = true;
-      console.log("listobjects " + key);
-      const response = await Storage.list(key);
-      console.log(response);
+      const config = {
+        // TODO: paging
+        // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
+        pageSize: 100
+      }
+      const response = await Storage.list(key, config);
       this.isFetching = false;
 
       response.results.forEach((res) => {
@@ -74,16 +73,10 @@ export default {
           this.folders.add(res.key);
         }
       });
-      // console.log(files);
-      // console.log(folders);
-
-      // this.files = files;
-      // this.folders = folders;
     },
   },
   watch: {
     keyProp(newValue, oldValue) {
-      console.log("----", newValue);
       this.listObjects(newValue);
     },
   },
