@@ -19,7 +19,6 @@ import { formatDatetime } from "./util/Datetime.vue";
         <td>
           <router-link
             :to="'/' + folder + '/'"
-            v-on:click="folderClicked('/' + folder + '/')"
             >{{ folder }}/</router-link
           >
         </td>
@@ -50,9 +49,6 @@ export default {
     };
   },
   methods: {
-    folderClicked(path) {
-      this.$emit("move", path);
-    },
     async listObjects(key) {
       // TODO: 階層のみ表示
       this.files = [];

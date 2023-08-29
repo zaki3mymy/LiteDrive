@@ -34,14 +34,15 @@ export default {
       // パスの最初のスラッシュを削除
       if (path.startsWith('/')) path = path.slice(1)
 
-      console.log(path)
       this.path = path
     }
   },
   mounted() {
-    M.AutoInit();
-    // 最初のページ
-    this.refresh('/')
+    M.AutoInit()
+  },
+  updated() {
+    const path = this.$route.path
+    this.refresh(path)
   }
 }
 </script>
