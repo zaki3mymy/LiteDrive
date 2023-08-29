@@ -54,6 +54,9 @@ export default {
       this.files = [];
       this.folders = new Set();
 
+      // 現在の階層を取得("/"の数を階層とする)
+      const level = (key.match(/\//g) || []).length
+
       this.isFetching = true;
       const config = {
         // TODO: paging
@@ -64,11 +67,16 @@ export default {
       this.isFetching = false;
 
       response.results.forEach((res) => {
+        // 階層が同じものだけを対象とする(フォルダーは+1階層)
+        const resLevel = (res.key.match(/\//g) || []).length
+
         if (res.size) {
-          this.files.push(res);
+          if (level == resLevel) this.files.push(res)
           // sometimes files declare a folder with a / within then
-          let possibleFolder = res.key.split("/").slice(0, -1).join("/");
-          if (possibleFolder) this.folders.add(possibleFolder);
+          let possibleFolder = res.key.split("/").slice(0, -1).join("/")
+          if (possibleFolder) {
+            if (level + 1 == resLevel) this.folders.add(possibleFolder)
+          }
         } else {
           this.folders.add(res.key);
         }
