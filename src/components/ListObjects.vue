@@ -1,6 +1,6 @@
 <script setup>
-import { Storage } from "aws-amplify";
-import { formatDatetime } from "./util/Datetime.vue";
+import { Storage } from 'aws-amplify'
+import { formatDatetime } from './util/Datetime.vue'
 </script>
 
 <template>
@@ -17,10 +17,7 @@ import { formatDatetime } from "./util/Datetime.vue";
       <tr v-for="folder in folders" :key="folder">
         <td><i class="material-icons">folder</i></td>
         <td>
-          <router-link
-            :to="'/' + folder + '/'"
-            >{{ folder }}/</router-link
-          >
+          <router-link :to="'/' + folder + '/'">{{ folder }}/</router-link>
         </td>
         <td></td>
       </tr>
@@ -38,33 +35,32 @@ import { formatDatetime } from "./util/Datetime.vue";
 <script>
 export default {
   props: {
-    keyProp: String,
+    keyProp: String
   },
-  emit: ["move"],
+  emit: ['move'],
   data() {
     return {
       files: [],
       folders: new Set(),
-      isFetching: true,
-    };
+      isFetching: true
+    }
   },
   methods: {
     async listObjects(key) {
-      // TODO: 階層のみ表示
-      this.files = [];
-      this.folders = new Set();
+      this.files = []
+      this.folders = new Set()
 
       // 現在の階層を取得("/"の数を階層とする)
       const level = (key.match(/\//g) || []).length
 
-      this.isFetching = true;
+      this.isFetching = true
       const config = {
         // TODO: paging
         // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
         pageSize: 100
       }
-      const response = await Storage.list(key, config);
-      this.isFetching = false;
+      const response = await Storage.list(key, config)
+      this.isFetching = false
 
       response.results.forEach((res) => {
         // 階層が同じものだけを対象とする(フォルダーは+1階層)
@@ -73,20 +69,20 @@ export default {
         if (res.size) {
           if (level == resLevel) this.files.push(res)
           // sometimes files declare a folder with a / within then
-          let possibleFolder = res.key.split("/").slice(0, -1).join("/")
+          let possibleFolder = res.key.split('/').slice(0, -1).join('/')
           if (possibleFolder) {
             if (level + 1 == resLevel) this.folders.add(possibleFolder)
           }
         } else {
-          this.folders.add(res.key);
+          this.folders.add(res.key)
         }
-      });
-    },
+      })
+    }
   },
   watch: {
     keyProp(newValue, oldValue) {
-      this.listObjects(newValue);
-    },
-  },
-};
+      this.listObjects(newValue)
+    }
+  }
+}
 </script>
