@@ -8,7 +8,7 @@ import ListObjects from '../components/ListObjects.vue'
     <div class="row">
       <div class="col s12">
         <p>{{ $route.path }}</p>
-        <router-link to="/">top</router-link> /
+        <router-link to="/"><i class="material-icons left">home</i></router-link> /
         <BreadcrumbList :path="path"></BreadcrumbList>
       </div>
     </div>
