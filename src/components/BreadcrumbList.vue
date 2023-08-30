@@ -35,6 +35,7 @@ export default {
       this.$emit('onClick', path)
     },
     generateBreadcrumbList(pathVar) {
+      this.crumbs = []
       if (!pathVar) return
 
       let path = pathVar;
