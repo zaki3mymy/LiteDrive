@@ -57,7 +57,7 @@ export default {
       const config = {
         // TODO: paging
         // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
-        pageSize: 100
+        pageSize: "ALL"
       }
       const response = await Storage.list(key, config)
       this.isFetching = false
