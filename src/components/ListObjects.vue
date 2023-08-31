@@ -5,7 +5,7 @@ import { formatDatetime } from './util/Datetime.vue'
 
 <template>
   <p v-if="isFetching">loading...</p>
-  <table v-else>
+  <table v-else class="highlight">
     <thead>
       <tr>
         <th></th>
