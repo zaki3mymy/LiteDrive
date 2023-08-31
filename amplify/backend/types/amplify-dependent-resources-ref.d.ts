@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "owncloudbox9407013f": {
+    "serverlessbox575c55aa": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -11,7 +11,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "s339cf5d0d": {
+    "s38b924de4": {
       "BucketName": "string",
       "Region": "string"
     }
