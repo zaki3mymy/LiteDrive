@@ -1,0 +1,14 @@
+{
+  "resourceName": "s38b924de4",
+  "policyUUID": "8b924de4",
+  "bucketName": "serverlessboxef0bd2505f5e46489a2b731333c327f3",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
