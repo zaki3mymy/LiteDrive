@@ -1,6 +1,6 @@
 <template>
   <span v-for="crumb in crumbs" :key="crumb.link">
-    <router-link :to="crumb.path" @click="updateBreadcrumb">{{ crumb.name }}</router-link> /
+    <router-link :to="crumb.path">{{ crumb.name }}</router-link> /
   </span>
 </template>
 
@@ -23,17 +23,12 @@ export default {
   props: {
     path: String
   },
-  emits: ['onClick'],
   data() {
     return {
       crumbs: []
     }
   },
   methods: {
-    updateBreadcrumb(e) {
-      const path = e.target.attributes.href.value
-      this.$emit('onClick', path)
-    },
     generateBreadcrumbList(pathVar) {
       this.crumbs = []
       if (!pathVar) return
@@ -55,8 +50,10 @@ export default {
       this.crumbs = crumbs
     }
   },
-  updated() {
-    this.generateBreadcrumbList(this.path)
+  watch: {
+    path(newValue, oldValue) {
+      this.generateBreadcrumbList(newValue)
+    }
   }
 }
 </script>
