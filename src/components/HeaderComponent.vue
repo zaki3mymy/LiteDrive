@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col s12">
-            <a href="/" class="brand-logo">OwnCloudBox</a>
+            <a href="/" class="brand-logo">serverless box</a>
             <div class="right">
               <button class="waves-effect waves-light grey btn hide-on-small-only" @click="signOut">Sign out</button>
             </div>
