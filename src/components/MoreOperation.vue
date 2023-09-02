@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     deleteObject(objectKey) {
-      console.log(objectKey)
       Storage.remove(objectKey).then(() => {
         alert(`${objectKey} を削除しました。`)
       }).catch((err) => {
