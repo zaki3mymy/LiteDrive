@@ -1,6 +1,7 @@
 <script setup>
 import { Storage } from 'aws-amplify'
 import { formatDatetime, shortFormatDatetime } from './util/Datetime.vue'
+import MoreOperation from './MoreOperation.vue'
 </script>
 
 <template>
@@ -43,9 +44,7 @@ import { formatDatetime, shortFormatDatetime } from './util/Datetime.vue'
           </span>
         </td>
         <td>
-          <a class="btn white z-depth-0 black-text">
-            <i class="material-icons">more_horiz</i>
-          </a>
+          <MoreOperation :objectKey="file.key"></MoreOperation>
         </td>
       </tr>
     </tbody>
@@ -60,6 +59,9 @@ export default {
     keyProp: String
   },
   emit: ['move'],
+  components: [
+    MoreOperation
+  ],
   data() {
     return {
       files: [],
