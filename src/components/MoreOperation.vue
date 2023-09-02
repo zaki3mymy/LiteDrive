@@ -8,7 +8,7 @@ import { Storage } from 'aws-amplify'
   </a>
 
   <ul :id="'more-ope' + objectKey" class="dropdown-content">
-    <li>
+    <li v-if="!objectKey.endsWith('/')">
       <a class="black-text" @click="downloadObject(objectKey)">
         <i class="material-icons">download</i>download
       </a>
