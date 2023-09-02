@@ -21,14 +21,15 @@ import { Storage } from 'aws-amplify'
       <p>{{ objectKey }} を削除します。</p>
     </div>
     <div class="card-action" style="display: flow-root">
-      <button
-        class="waves-effect waves-light blue-grey btn right"
-        @click="deleteObject(objectKey)"
-      >
+      <button class="waves-effect waves-light blue-grey btn right modal-close" @click="deleteObject(objectKey)">
         Delete
       </button>
       <span class="right">&nbsp;</span>
-      <button class="waves-effect waves-light blue-grey lighten-3 btn right">Cancel</button>
+      <button
+        class="waves-effect waves-light blue-grey lighten-3 btn right modal-close"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 </template>
@@ -43,16 +44,16 @@ export default {
   methods: {
     deleteObject(objectKey) {
       console.log(objectKey)
-      // Storage.remove(objectKey).then(
-      //   alert(`${objectKey} を削除しました。`)
-      //   // モーダルを閉じる
-      // )
-      console.log(this)
+      Storage.remove(objectKey).then(() => {
+        alert(`${objectKey} を削除しました。`)
+      }).catch((err) => {
+        console.log("error!", err)
+        alert("削除に失敗しました。")
+      })
     }
   },
   mounted() {
     M.AutoInit()
-    this.key = this.objectKey
   }
 }
 </script>
