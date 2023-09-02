@@ -1,6 +1,7 @@
 <script setup>
 import { Storage } from 'aws-amplify'
-import { formatDatetime } from './util/Datetime.vue'
+import { formatDatetime, shortFormatDatetime } from './util/Datetime.vue'
+import MoreOperation from './MoreOperation.vue'
 </script>
 
 <template>
@@ -8,9 +9,13 @@ import { formatDatetime } from './util/Datetime.vue'
   <table v-else class="highlight">
     <thead>
       <tr>
-        <th></th>
-        <th>ファイル名</th>
-        <th>最終更新日</th>
+        <th style="width: 10%; min-width: 30px"></th>
+        <th style="width: 50%">ファイル名</th>
+        <th style="width: 30%">
+          <span class="hide-on-small-only">更新日時</span>
+          <span class="hide-on-med-only show-on-small">更新日</span>
+        </th>
+        <th style="width: 10%; min-width: 30px"></th>
       </tr>
     </thead>
     <tbody>
@@ -26,18 +31,37 @@ import { formatDatetime } from './util/Datetime.vue'
         <td>
           <router-link :to="file.key">{{ file.key }}</router-link>
         </td>
-        <td>{{ formatDatetime(file.lastModified) }}</td>
+        <td>
+          <span class="hide-on-small-only">
+            {{ formatDatetime(file.lastModified) }}
+          </span>
+          <span
+            class="hide-on-med-only show-on-small tooltipped"
+            data-position="top"
+            :data-tooltip="formatDatetime(file.lastModified)"
+          >
+            {{ shortFormatDatetime(file.lastModified) }}
+          </span>
+        </td>
+        <td>
+          <MoreOperation :objectKey="file.key"></MoreOperation>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+import M from 'materialize-css'
+
 export default {
   props: {
     keyProp: String
   },
   emit: ['move'],
+  components: [
+    MoreOperation
+  ],
   data() {
     return {
       files: [],
@@ -57,7 +81,7 @@ export default {
       const config = {
         // TODO: paging
         // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
-        pageSize: "ALL"
+        pageSize: 'ALL'
       }
       const response = await Storage.list(key, config)
       this.isFetching = false
@@ -71,7 +95,7 @@ export default {
           // sometimes files declare a folder with a / within then
           let possibleFolder = res.key.split('/').slice(0, -1).join('/')
           if (possibleFolder) {
-            possibleFolder += "/"
+            possibleFolder += '/'
             if (level + 1 == resLevel) this.folders.add(possibleFolder)
           }
         } else {
@@ -84,6 +108,11 @@ export default {
     keyProp(newValue, oldValue) {
       this.listObjects(newValue)
     }
+  },
+  updated() {
+    const elems = document.querySelectorAll('.tooltipped')
+    const options = {}
+    M.Tooltip.init(elems, options)
   }
 }
 </script>
