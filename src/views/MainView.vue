@@ -1,7 +1,7 @@
 <script setup>
 import BreadcrumbList from '../components/BreadcrumbList.vue'
-import UploadObject from '../components/UploadObject.vue'
 import ListObjects from '../components/ListObjects.vue'
+import AddObject from '../components/AddObject.vue'
 </script>
 <template>
   <div class="container">
@@ -13,18 +13,11 @@ import ListObjects from '../components/ListObjects.vue'
       </div>
     </div>
     <div class="row">
-      <a class="waves-effect waves-light grey btn modal-trigger" href="#upload">
-        <i class="material-icons left">file_upload</i>upload
-      </a>
-      <div id="upload" class="modal">
-        <UploadObject></UploadObject>
-      </div>
-    </div>
-    <div class="row">
       <div class="col s12">
         <ListObjects :keyProp="path"></ListObjects>
       </div>
     </div>
+    <AddObject :path="path" @uploaded="refresh"></AddObject>
   </div>
 </template>
 
@@ -34,8 +27,8 @@ import M from 'materialize-css'
 export default {
   components: {
     BreadcrumbList,
-    UploadObject,
-    ListObjects
+    ListObjects,
+    AddObject
   },
   data() {
     return {
@@ -43,7 +36,8 @@ export default {
     }
   },
   methods: {
-    refresh(path) {
+    refresh() {
+      let path = this.$route.path
       // パスの最初のスラッシュを削除
       if (path.startsWith('/')) path = path.slice(1)
 
@@ -54,8 +48,7 @@ export default {
     M.AutoInit()
   },
   updated() {
-    const path = this.$route.path
-    this.refresh(path)
+    this.refresh()
   }
 }
 </script>
