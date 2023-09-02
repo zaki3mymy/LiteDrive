@@ -3,7 +3,7 @@ import moment from "moment";
 
 const formatDatetime = (date: Date) => {
   const dt = moment(date);
-  return dt.format("YYYY/MM/DD hh:mm:ss");
+  return dt.format("YYYY/MM/DD HH:mm:ss");
 };
 
 const shortFormatDatetime = (date: Date) => {
