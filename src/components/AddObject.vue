@@ -17,7 +17,13 @@ import { Storage } from 'aws-amplify'
         <a class="btn-floating blue-grey lighten-2" @click="fileUpload">
           <i class="material-icons">file_upload</i>
         </a>
-        <input id="upload_file" type="file" class="hide" ref="fileInput" @change="handleFileChange" />
+        <input
+          id="upload_file"
+          type="file"
+          class="hide"
+          ref="fileInput"
+          @change="handleFileChange"
+        />
       </li>
     </ul>
   </div>
@@ -58,7 +64,7 @@ export default {
   emits: ['uploaded'],
   data() {
     return {
-      folderName: '',
+      folderName: ''
     }
   },
   methods: {
@@ -74,44 +80,38 @@ export default {
         return
       }
 
-      console.log(folderName)
       if (!folderName.endsWith('/')) folderName += '/'
 
       folderName = this.path + folderName
-      console.log(folderName)
 
-      const result = await Storage.put(folderName, null)
-      console.log('---result', result)
+      await Storage.put(folderName, null)
       alert('フォルダを作成しました。')
     },
     fileUpload() {
       // ファイル選択ダイアログを開く(ファイル選択後 handlerFileChange が呼ばれる)
-      this.$refs.fileInput.click();
+      this.$refs.fileInput.click()
     },
     handleFileChange() {
       // イベントリスナーの中でthisを使うために変数に入れる
       const vm = this
 
-      const selectedFile = event.target.files[0];
+      const selectedFile = event.target.files[0]
       if (selectedFile) {
         const uploadFilename = this.path + selectedFile.name
-        console.log(uploadFilename)
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const data = new Uint8Array(e.target.result);
-          console.log(data);
 
-          const result = Storage.put(uploadFilename, data);
-          console.log("---- result", result)
+        const reader = new FileReader()
+        reader.onload = function (e) {
+          const data = new Uint8Array(e.target.result)
 
-          alert("ファイルをアップロードしました。")
-          
+          Storage.put(uploadFilename, data)
+
+          alert('ファイルをアップロードしました。')
+
           // ファイル選択を初期化する
           document.getElementById('upload_file').value = ''
-          vm.$emit("uploaded")
-        };
-        reader.readAsArrayBuffer(selectedFile);
+          vm.$emit('uploaded')
+        }
+        reader.readAsArrayBuffer(selectedFile)
       }
     }
   },
