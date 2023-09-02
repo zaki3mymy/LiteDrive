@@ -25,6 +25,9 @@ import MoreOperation from './MoreOperation.vue'
           <router-link :to="'/' + folder">{{ folder }}</router-link>
         </td>
         <td></td>
+        <td>
+          <MoreOperation :objectKey="folder"></MoreOperation>
+        </td>
       </tr>
       <tr v-for="file in files" :key="file.key">
         <td></td>
