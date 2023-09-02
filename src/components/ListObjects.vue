@@ -17,7 +17,7 @@ import { formatDatetime } from './util/Datetime.vue'
       <tr v-for="folder in folders" :key="folder">
         <td><i class="material-icons">folder</i></td>
         <td>
-          <router-link :to="'/' + folder + '/'">{{ folder }}/</router-link>
+          <router-link :to="'/' + folder">{{ folder }}</router-link>
         </td>
         <td></td>
       </tr>
@@ -71,10 +71,11 @@ export default {
           // sometimes files declare a folder with a / within then
           let possibleFolder = res.key.split('/').slice(0, -1).join('/')
           if (possibleFolder) {
+            possibleFolder += "/"
             if (level + 1 == resLevel) this.folders.add(possibleFolder)
           }
         } else {
-          this.folders.add(res.key)
+          if (level + 1 == resLevel) this.folders.add(res.key)
         }
       })
     }
