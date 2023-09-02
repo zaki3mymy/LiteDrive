@@ -74,7 +74,7 @@ export default {
             if (level + 1 == resLevel) this.folders.add(possibleFolder)
           }
         } else {
-          this.folders.add(res.key)
+          if (level + 1 == resLevel) this.folders.add(res.key)
         }
       })
     }
