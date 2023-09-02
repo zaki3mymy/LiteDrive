@@ -14,7 +14,10 @@ import { Storage } from 'aws-amplify'
         </a>
       </li>
       <li>
-        <a class="btn-floating blue-grey lighten-2"><i class="material-icons">file_upload</i></a>
+        <a class="btn-floating blue-grey lighten-2" @click="fileUpload">
+          <i class="material-icons">file_upload</i>
+        </a>
+        <input id="upload_file" type="file" class="hide" ref="fileInput" @change="handleFileChange" />
       </li>
     </ul>
   </div>
@@ -55,7 +58,7 @@ export default {
   emits: ['uploaded'],
   data() {
     return {
-      folderName: ''
+      folderName: '',
     }
   },
   methods: {
@@ -78,8 +81,38 @@ export default {
       console.log(folderName)
 
       const result = await Storage.put(folderName, null)
-      console.log("---result", result)
+      console.log('---result', result)
       alert('フォルダを作成しました。')
+    },
+    fileUpload() {
+      // ファイル選択ダイアログを開く(ファイル選択後 handlerFileChange が呼ばれる)
+      this.$refs.fileInput.click();
+    },
+    handleFileChange() {
+      // イベントリスナーの中でthisを使うために変数に入れる
+      const vm = this
+
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        const uploadFilename = this.path + selectedFile.name
+        console.log(uploadFilename)
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const data = new Uint8Array(e.target.result);
+          console.log(data);
+
+          const result = Storage.put(uploadFilename, data);
+          console.log("---- result", result)
+
+          alert("ファイルをアップロードしました。")
+          
+          // ファイル選択を初期化する
+          document.getElementById('upload_file').value = ''
+          vm.$emit("uploaded")
+        };
+        reader.readAsArrayBuffer(selectedFile);
+      }
     }
   },
   mounted() {
