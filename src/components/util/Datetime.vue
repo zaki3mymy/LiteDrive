@@ -1,12 +1,12 @@
-<script lang="ts">
+<script>
 import moment from "moment";
 
-const formatDatetime = (date: Date) => {
+const formatDatetime = (date) => {
   const dt = moment(date);
   return dt.format("YYYY/MM/DD HH:mm:ss");
 };
 
-const shortFormatDatetime = (date: Date) => {
+const shortFormatDatetime = (date) => {
   const dt = moment(date);
   return dt.format("MM/DD");
 };
