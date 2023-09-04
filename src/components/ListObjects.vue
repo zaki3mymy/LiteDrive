@@ -4,7 +4,6 @@ import MoreOperation from './MoreOperation.vue'
 </script>
 
 <template>
-  <!-- <p v-if="isFetching">loading...</p> -->
   <table class="highlight">
     <thead>
       <tr>
@@ -61,13 +60,13 @@ class S3Object {
     this.key = key
     this.lastModified = lastModified
 
-    let name = ""
-    if (key.endsWith("/")) {
+    let name = ''
+    if (key.endsWith('/')) {
       // フォルダ
-      name = key.split("/").slice(-2)[0] + "/"
+      name = key.split('/').slice(-2)[0] + '/'
     } else {
       // ファイル
-      name = key.split("/").slice(-1)[0]
+      name = key.split('/').slice(-1)[0]
     }
     this.name = name
   }
@@ -78,7 +77,7 @@ export default {
     path: String,
     results: []
   },
-  emits: ["updateList"],
+  emits: ['updateList'],
   components: {
     MoreOperation
   },
@@ -110,11 +109,11 @@ export default {
           if (level == resLevel) files.push(obj)
 
           // ファイルまでの階層をフォルダとして追加
-          const parentFolder = res.key.split("/").slice(0, -1).join("/") + "/"
-          if (parentFolder !== "/" && level + 1 == resLevel && !folderKeys.has(parentFolder)) {
-              const folderObj = new S3Object(parentFolder, null)
-              folders.push(folderObj)
-              folderKeys.add(parentFolder)
+          const parentFolder = res.key.split('/').slice(0, -1).join('/') + '/'
+          if (parentFolder !== '/' && level + 1 == resLevel && !folderKeys.has(parentFolder)) {
+            const folderObj = new S3Object(parentFolder, null)
+            folders.push(folderObj)
+            folderKeys.add(parentFolder)
           }
         } else {
           // フォルダ
@@ -128,7 +127,7 @@ export default {
       this.folders = folders
     },
     updateMe() {
-      this.$emit("updated")
+      this.$emit('updated')
     }
   },
   mounted() {
@@ -138,6 +137,6 @@ export default {
     results(newValue) {
       this.listObjects(this.path, newValue)
     }
-  },
+  }
 }
 </script>

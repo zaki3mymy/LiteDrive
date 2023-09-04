@@ -27,13 +27,14 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
       <p>{{ objectKey }} を削除します。</p>
     </div>
     <div class="card-action" style="display: flow-root">
-      <button class="waves-effect waves-light blue-grey btn right modal-close" @click="deleteObject(objectKey)">
+      <button
+        class="waves-effect waves-light blue-grey btn right modal-close"
+        @click="deleteObject(objectKey)"
+      >
         Delete
       </button>
       <span class="right">&nbsp;</span>
-      <button
-        class="waves-effect waves-light blue-grey lighten-3 btn right modal-close"
-      >
+      <button class="waves-effect waves-light blue-grey lighten-3 btn right modal-close">
         Cancel
       </button>
     </div>
@@ -47,40 +48,42 @@ export default {
   props: {
     objectKey: String
   },
-  emits: ["updated"],
+  emits: ['updated'],
   methods: {
-    downloadObject(objectKey){
+    downloadObject(objectKey) {
       Storage.get(objectKey, { download: true }).then((result) => {
         // ダウンロード処理
         if (result.Body) {
           const blob = result.Body
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
 
-          const filename = objectKey.split("/").slice(-1)[0]
-          a.download = filename || 'download';
+          const filename = objectKey.split('/').slice(-1)[0]
+          a.download = filename || 'download'
 
           const clickHandler = () => {
             setTimeout(() => {
-              URL.revokeObjectURL(url);
-              a.removeEventListener('click', clickHandler);
-            }, 150);
-          };
-          a.addEventListener('click', clickHandler, false);
-          a.click();
+              URL.revokeObjectURL(url)
+              a.removeEventListener('click', clickHandler)
+            }, 150)
+          }
+          a.addEventListener('click', clickHandler, false)
+          a.click()
         }
       })
     },
     deleteObject(objectKey) {
       const vm = this
-      Storage.remove(objectKey).then(() => {
-        infoMessage(`${objectKey} を削除しました。`)
-        vm.$emit("updated")
-      }).catch((err) => {
-        console.error(err)
-        errorMessage("削除に失敗しました。")
-      })
+      Storage.remove(objectKey)
+        .then(() => {
+          infoMessage(`${objectKey} を削除しました。`)
+          vm.$emit('updated')
+        })
+        .catch((err) => {
+          console.error(err)
+          errorMessage('削除に失敗しました。')
+        })
     }
   },
   mounted() {

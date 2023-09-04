@@ -6,7 +6,12 @@
           <div class="col s12">
             <a href="/" class="brand-logo">serverless box</a>
             <div class="right">
-              <button class="waves-effect waves-light blue-grey btn hide-on-small-only" @click="signOut">Sign out</button>
+              <button
+                class="waves-effect waves-light blue-grey btn hide-on-small-only"
+                @click="signOut"
+              >
+                Sign out
+              </button>
             </div>
           </div>
         </div>
