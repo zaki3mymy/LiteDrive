@@ -1,5 +1,6 @@
 <script setup>
 import { Storage } from 'aws-amplify'
+import { infoMessage, errorMessage } from './util/Toast.vue'
 </script>
 
 <template>
@@ -45,7 +46,7 @@ import { Storage } from 'aws-amplify'
     </div>
     <div class="card-action" style="display: flow-root">
       <button
-        class="waves-effect waves-light blue-grey btn right"
+        class="waves-effect waves-light blue-grey btn right modal-close"
         @click="createFolder(folderName)"
       >
         Create!
@@ -70,13 +71,13 @@ export default {
   methods: {
     async createFolder(folderName) {
       if (!folderName) {
-        alert('フォルダ名が未入力です。')
+        errorMessage('フォルダ名が未入力です。')
         return
       }
 
       if (folderName.endsWith('/')) {
         // TODO: 自動で末尾"/"を削除する(再帰的に削除)
-        alert('末尾のスラッシュを削除してください。')
+        errorMessage('末尾のスラッシュを削除してください。')
         return
       }
 
@@ -85,7 +86,8 @@ export default {
       folderName = this.path + folderName
 
       await Storage.put(folderName, null)
-      alert('フォルダを作成しました。')
+      infoMessage('フォルダを作成しました。')
+      this.$emit('uploaded')
     },
     fileUpload() {
       // ファイル選択ダイアログを開く(ファイル選択後 handlerFileChange が呼ばれる)
@@ -100,12 +102,12 @@ export default {
         const uploadFilename = this.path + selectedFile.name
 
         const reader = new FileReader()
-        reader.onload = function (e) {
+        reader.onload = async function (e) {
           const data = new Uint8Array(e.target.result)
 
-          Storage.put(uploadFilename, data)
+          await Storage.put(uploadFilename, data)
 
-          alert('ファイルをアップロードしました。')
+          infoMessage('ファイルをアップロードしました。')
 
           // ファイル選択を初期化する
           document.getElementById('upload_file').value = ''

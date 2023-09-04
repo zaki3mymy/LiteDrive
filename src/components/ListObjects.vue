@@ -1,12 +1,10 @@
 <script setup>
-import { Storage } from 'aws-amplify'
 import { formatDatetime, shortFormatDatetime } from './util/Datetime.vue'
 import MoreOperation from './MoreOperation.vue'
 </script>
 
 <template>
-  <p v-if="isFetching">loading...</p>
-  <table v-else class="highlight">
+  <table class="highlight">
     <thead>
       <tr>
         <th style="width: 10%; min-width: 30px"></th>
@@ -26,7 +24,7 @@ import MoreOperation from './MoreOperation.vue'
         </td>
         <td></td>
         <td>
-          <MoreOperation :objectKey="folder.key"></MoreOperation>
+          <MoreOperation :objectKey="folder.key" @updated="updateMe"></MoreOperation>
         </td>
       </tr>
       <tr v-for="file in files" :key="file.key">
@@ -39,7 +37,7 @@ import MoreOperation from './MoreOperation.vue'
             {{ formatDatetime(file.lastModified) }}
           </span>
           <span
-            class="hide-on-med-only show-on-small tooltipped"
+            class="hide-on-med-and-up show-on-small tooltipped"
             data-position="top"
             :data-tooltip="formatDatetime(file.lastModified)"
           >
@@ -47,7 +45,7 @@ import MoreOperation from './MoreOperation.vue'
           </span>
         </td>
         <td>
-          <MoreOperation :objectKey="file.key"></MoreOperation>
+          <MoreOperation :objectKey="file.key" @updated="updateMe"></MoreOperation>
         </td>
       </tr>
     </tbody>
@@ -62,13 +60,13 @@ class S3Object {
     this.key = key
     this.lastModified = lastModified
 
-    let name = ""
-    if (key.endsWith("/")) {
+    let name = ''
+    if (key.endsWith('/')) {
       // フォルダ
-      name = key.split("/").slice(-2)[0] + "/"
+      name = key.split('/').slice(-2)[0] + '/'
     } else {
       // ファイル
-      name = key.split("/").slice(-1)[0]
+      name = key.split('/').slice(-1)[0]
     }
     this.name = name
   }
@@ -76,40 +74,31 @@ class S3Object {
 
 export default {
   props: {
-    keyProp: String
+    path: String,
+    results: []
   },
-  emit: ['move'],
-  components: [
+  emits: ['updateList'],
+  components: {
     MoreOperation
-  ],
+  },
   data() {
     return {
       files: [],
-      folders: [],
-      isFetching: true
+      folders: []
     }
   },
   methods: {
-    async listObjects(key) {
+    async listObjects(key, results) {
       this.files = []
       this.folders = []
 
       // 現在の階層を取得("/"の数を階層とする)
       const level = (key.match(/\//g) || []).length
 
-      this.isFetching = true
-      const config = {
-        // TODO: paging
-        // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
-        pageSize: 'ALL'
-      }
-      const response = await Storage.list(key, config)
-      this.isFetching = false
-
       const files = []
       const folders = []
       const folderKeys = new Set()
-      response.results.forEach((res) => {
+      results.forEach((res) => {
         // 階層が同じものだけを対象とする(フォルダーは+1階層)
         const resLevel = (res.key.match(/\//g) || []).length
 
@@ -120,11 +109,11 @@ export default {
           if (level == resLevel) files.push(obj)
 
           // ファイルまでの階層をフォルダとして追加
-          const parentFolder = res.key.split("/").slice(0, -1).join("/") + "/"
-          if (parentFolder !== "/" && level + 1 == resLevel && !folderKeys.has(parentFolder)) {
-              const folderObj = new S3Object(parentFolder, null)
-              folders.push(folderObj)
-              folderKeys.add(parentFolder)
+          const parentFolder = res.key.split('/').slice(0, -1).join('/') + '/'
+          if (parentFolder !== '/' && level + 1 == resLevel && !folderKeys.has(parentFolder)) {
+            const folderObj = new S3Object(parentFolder, null)
+            folders.push(folderObj)
+            folderKeys.add(parentFolder)
           }
         } else {
           // フォルダ
@@ -136,17 +125,18 @@ export default {
       })
       this.files = files
       this.folders = folders
+    },
+    updateMe() {
+      this.$emit('updated')
     }
+  },
+  mounted() {
+    M.AutoInit()
   },
   watch: {
-    keyProp(newValue, oldValue) {
-      this.listObjects(newValue)
+    results(newValue) {
+      this.listObjects(this.path, newValue)
     }
-  },
-  updated() {
-    const elems = document.querySelectorAll('.tooltipped')
-    const options = {}
-    M.Tooltip.init(elems, options)
   }
 }
 </script>

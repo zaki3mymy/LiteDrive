@@ -33,7 +33,7 @@ export default {
       this.crumbs = []
       if (!pathVar) return
 
-      let path = pathVar;
+      let path = pathVar
       // 末尾に"/"があるとsplitした配列の最後の要素が空白になってしまうため、末尾"/"を除去
       if (pathVar.endsWith('/')) {
         path = pathVar.slice(0, pathVar.length - 1)
@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    path(newValue, oldValue) {
+    path(newValue) {
       this.generateBreadcrumbList(newValue)
     }
   }
