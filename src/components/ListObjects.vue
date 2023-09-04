@@ -39,7 +39,7 @@ import MoreOperation from './MoreOperation.vue'
             {{ formatDatetime(file.lastModified) }}
           </span>
           <span
-            class="hide-on-med-only show-on-small tooltipped"
+            class="hide-on-med-and-up show-on-small tooltipped"
             data-position="top"
             :data-tooltip="formatDatetime(file.lastModified)"
           >
