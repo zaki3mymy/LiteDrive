@@ -46,7 +46,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
     </div>
     <div class="card-action" style="display: flow-root">
       <button
-        class="waves-effect waves-light blue-grey btn right"
+        class="waves-effect waves-light blue-grey btn right modal-close"
         @click="createFolder(folderName)"
       >
         Create!
