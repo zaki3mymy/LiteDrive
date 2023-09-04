@@ -1,5 +1,6 @@
 <script setup>
 import { Storage } from 'aws-amplify'
+import { infoMessage, errorMessage } from './util/Toast.vue'
 </script>
 
 <template>
@@ -72,10 +73,10 @@ export default {
     },
     deleteObject(objectKey) {
       Storage.remove(objectKey).then(() => {
-        alert(`${objectKey} を削除しました。`)
+        infoMessage(`${objectKey} を削除しました。`)
       }).catch((err) => {
         console.log("error!", err)
-        alert("削除に失敗しました。")
+        errorMessage("削除に失敗しました。")
       })
     }
   },
