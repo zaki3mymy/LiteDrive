@@ -78,10 +78,9 @@ export default {
   props: {
     keyProp: String
   },
-  emit: ['move'],
-  components: [
+  components: {
     MoreOperation
-  ],
+  },
   data() {
     return {
       files: [],
