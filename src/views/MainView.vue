@@ -1,4 +1,5 @@
 <script setup>
+import { Storage } from 'aws-amplify'
 import BreadcrumbList from '../components/BreadcrumbList.vue'
 import ListObjects from '../components/ListObjects.vue'
 import AddObject from '../components/AddObject.vue'
@@ -14,10 +15,10 @@ import AddObject from '../components/AddObject.vue'
     </div>
     <div class="row">
       <div class="col s12">
-        <ListObjects :keyProp="path"></ListObjects>
+        <ListObjects :path="path" :results="results" @updated="refresh(path)"></ListObjects>
       </div>
     </div>
-    <AddObject :path="path" @uploaded="refresh"></AddObject>
+    <AddObject :path="path" @uploaded="refresh(path)"></AddObject>
   </div>
 </template>
 
@@ -32,23 +33,34 @@ export default {
   },
   data() {
     return {
-      path: String
+      path: String,
+      results: []
     }
   },
   methods: {
-    refresh() {
-      let path = this.$route.path
+    async refresh(path){
       // パスの最初のスラッシュを削除
       if (path.startsWith('/')) path = path.slice(1)
 
+      const config = {
+        // TODO: paging
+        // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
+        pageSize: 'ALL'
+      }
+      const response = await Storage.list(path, config)
+
       this.path = path
+      this.results = response.results
     }
   },
   mounted() {
     M.AutoInit()
   },
-  updated() {
-    this.refresh()
+  watch: {
+    $route(to, from) {
+      // パス変更時のイベント
+      this.refresh(to.path)
+    }
   }
 }
 </script>
