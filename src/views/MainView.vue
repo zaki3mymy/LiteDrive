@@ -57,7 +57,7 @@ export default {
     M.AutoInit()
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       // パス変更時のイベント
       this.refresh(to.path)
     }

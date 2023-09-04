@@ -51,7 +51,7 @@ export default {
     }
   },
   watch: {
-    path(newValue, oldValue) {
+    path(newValue) {
       this.generateBreadcrumbList(newValue)
     }
   }

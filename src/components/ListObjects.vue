@@ -135,7 +135,7 @@ export default {
     M.AutoInit()
   },
   watch: {
-    results(newValue, oldValue) {
+    results(newValue) {
       this.listObjects(this.path, newValue)
     }
   },
