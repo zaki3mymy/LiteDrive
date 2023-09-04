@@ -87,6 +87,7 @@ export default {
 
       await Storage.put(folderName, null)
       infoMessage('フォルダを作成しました。')
+      this.$emit('uploaded')
     },
     fileUpload() {
       // ファイル選択ダイアログを開く(ファイル選択後 handlerFileChange が呼ばれる)
@@ -101,10 +102,10 @@ export default {
         const uploadFilename = this.path + selectedFile.name
 
         const reader = new FileReader()
-        reader.onload = function (e) {
+        reader.onload = async function (e) {
           const data = new Uint8Array(e.target.result)
 
-          Storage.put(uploadFilename, data)
+          await Storage.put(uploadFilename, data)
 
           infoMessage('ファイルをアップロードしました。')
 

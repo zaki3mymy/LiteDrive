@@ -47,6 +47,7 @@ export default {
   props: {
     objectKey: String
   },
+  emits: ["updated"],
   methods: {
     downloadObject(objectKey){
       Storage.get(objectKey, { download: true }).then((result) => {
@@ -72,10 +73,12 @@ export default {
       })
     },
     deleteObject(objectKey) {
+      const vm = this
       Storage.remove(objectKey).then(() => {
         infoMessage(`${objectKey} を削除しました。`)
+        vm.$emit("updated")
       }).catch((err) => {
-        console.log("error!", err)
+        console.error(err)
         errorMessage("削除に失敗しました。")
       })
     }
