@@ -3,6 +3,7 @@ import { Storage } from 'aws-amplify'
 import BreadcrumbList from '../components/BreadcrumbList.vue'
 import ListObjects from '../components/ListObjects.vue'
 import AddObject from '../components/AddObject.vue'
+import PreLoader from '../components/util/PreLoader.vue'
 </script>
 <template>
   <div class="container">
@@ -15,7 +16,10 @@ import AddObject from '../components/AddObject.vue'
     </div>
     <div class="row">
       <div class="col s12">
-        <ListObjects :path="path" :results="results" @updated="refresh(path)"></ListObjects>
+        <div v-show="isFetching">
+          <PreLoader></PreLoader>
+        </div>
+        <ListObjects v-show="!isFetching" :path="path" :results="results" @updated="refresh(path)"></ListObjects>
       </div>
     </div>
     <AddObject :path="path" @uploaded="refresh(path)"></AddObject>
@@ -34,7 +38,8 @@ export default {
   data() {
     return {
       path: String,
-      results: []
+      results: [],
+      isFetching: false
     }
   },
   methods: {
@@ -42,6 +47,7 @@ export default {
       // パスの最初のスラッシュを削除
       if (path.startsWith('/')) path = path.slice(1)
 
+      this.isFetching = true
       const config = {
         // TODO: paging
         // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
@@ -51,6 +57,8 @@ export default {
 
       this.path = path
       this.results = response.results
+
+      this.isFetching = false
     }
   },
   mounted() {
