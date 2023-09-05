@@ -63,6 +63,7 @@ export default {
   },
   mounted() {
     M.AutoInit()
+    this.refresh("/")
   },
   watch: {
     $route(to) {
