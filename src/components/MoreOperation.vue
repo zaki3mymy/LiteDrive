@@ -45,9 +45,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
 import M from 'materialize-css'
 
 export default {
-  props: {
-    objectKey: String
-  },
+  props: ['objectKey'],
   emits: ['updated'],
   methods: {
     downloadObject(objectKey) {

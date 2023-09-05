@@ -73,10 +73,7 @@ class S3Object {
 }
 
 export default {
-  props: {
-    path: String,
-    results: []
-  },
+  props: ['path', 'results'],
   emits: ['updateList'],
   components: {
     MoreOperation

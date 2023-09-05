@@ -20,9 +20,7 @@ class Breadcrumb {
 }
 
 export default {
-  props: {
-    path: String
-  },
+  props: ['path'],
   data() {
     return {
       crumbs: []

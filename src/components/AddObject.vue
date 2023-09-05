@@ -59,9 +59,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
 import M from 'materialize-css'
 
 export default {
-  props: {
-    path: String
-  },
+  props: ['path'],
   emits: ['uploaded'],
   data() {
     return {
