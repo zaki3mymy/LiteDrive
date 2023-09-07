@@ -73,14 +73,33 @@ export default {
     },
     deleteObject(objectKey) {
       const vm = this
-      Storage.remove(objectKey)
-        .then(() => {
-          infoMessage(`${objectKey} を削除しました。`)
-          vm.$emit('updated')
-        })
-        .catch((err) => {
-          console.error(err)
-          errorMessage('削除に失敗しました。')
+
+      const deleteObjectKey = () => {
+        Storage.remove(objectKey)
+          .then(() => {
+            infoMessage(`${objectKey} を削除しました。`)
+            vm.$emit('updated')
+          })
+          .catch((err) => {
+            console.error(err)
+            errorMessage('削除に失敗しました。')
+          })
+      }
+      // 先に子オブジェクトを全て削除する
+      const config = {
+        pageSize: 'ALL'
+      }
+      Storage.list(objectKey, config)
+        .then((response) => {
+          // 子オブジェクトを全て削除する
+          response.results.forEach((res) => {
+            Storage.remove(res.key)
+              .catch((err) => {
+                console.error(err)
+              })
+          })
+          // 該当オブジェクトを削除する
+          deleteObjectKey()
         })
     }
   },
