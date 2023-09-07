@@ -1,35 +1,84 @@
 # serverlessbox
 
-This template should help get you started developing with Vue 3 in Vite.
+![image](https://github.com/zaki3mymy/serverlessbox/assets/91773180/74122d19-b714-4899-8912-395f3dfb4ec1)
 
-## Recommended IDE Setup
+serverlessbox is a file storage application using Amazon S3.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## Description
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+The motivation for this project is to build low cost, high-capacity shared storage. Most of the best storage services have limited storage space on their free plans. And it's just a little pricey for paid plans.
 
-## Project Setup
+serverlessbox is a storage service that you can start with Amazon S3 usage fee (low cost!).
+By building the application within your AWS account, storage charges are tied to your AWS charges.
 
-```sh
+
+## Architecture
+
+![serverlessbox architecture](https://github.com/zaki3mymy/serverlessbox/assets/91773180/e69dc604-b146-42d7-ab43-a7e7e402236d)
+
+
+## Requirement
+
+- Amplify CLI
+- npm
+
+
+## Installation
+
+Clone this repository.
+```
+git clone https://github.com/zaki3mymy/serverlessbox.git
+cd serverlessbox
+```
+
+Install dependencies.
+```
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Building a backend for the development environment.
+```
+amplify init
+amplify push
+```
 
-```sh
+
+## Usage
+
+First, add a user to Cognito User Pools (named serverlessboxXXXXXXXX_userpool_XXXXXXXX-dev).
+
+Next, run the command below to access http://localhost:8080 and sign in.
+
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
+Then, click the add icon at the bottom right and create a folder or upload a file. After that, you can operate it intuitively!
 
-```sh
-npm run build
+
+## Deployment
+
+If you want to deploy as a production environment, execute the following command.
+
+```
+$ amplify hosting add
+
+√ Select the plugin module to execute · Amazon CloudFront and S3
+√ hosting bucket name · serverlessbox-yyyymmddhhMMss-hostingbucket
+Static webhosting is disabled for the hosting bucket when CloudFront Distribution is enabled.
+
+You can now publish your app using the following command:
+Command: amplify publish
+
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+At the end.
 ```
+amplify publish
+```
+
+
+## License
+
+serverlessbox is under [MIT LICENSE](./LICENSE).
