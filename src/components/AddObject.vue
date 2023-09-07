@@ -11,7 +11,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
     <ul>
       <li>
         <a class="btn-floating blue-grey lighten-2 modal-trigger" href="#create-folder">
-          <i class="material-icons">folder</i>
+          <i class="material-icons">create_new_folder</i>
         </a>
       </li>
       <li>
@@ -59,9 +59,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
 import M from 'materialize-css'
 
 export default {
-  props: {
-    path: String
-  },
+  props: ['path'],
   emits: ['uploaded'],
   data() {
     return {

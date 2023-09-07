@@ -30,7 +30,7 @@ import MoreOperation from './MoreOperation.vue'
       <tr v-for="file in files" :key="file.key">
         <td></td>
         <td>
-          <router-link :to="file.key">{{ file.name }}</router-link>
+          {{ file.name }}
         </td>
         <td>
           <span class="hide-on-small-only">
@@ -73,10 +73,7 @@ class S3Object {
 }
 
 export default {
-  props: {
-    path: String,
-    results: []
-  },
+  props: ['path', 'results'],
   emits: ['updateList'],
   components: {
     MoreOperation
