@@ -30,7 +30,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
   </div>
   <div id="create-folder" class="modal card">
     <div class="card-content">
-      <span class="card-title">Create Folder</span>
+      <span class="card-title">{{ $t("dialog.title.create_folder") }}</span>
 
       <div class="input-field col s6">
         <input
@@ -41,7 +41,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
           class="validate"
           pattern="^.*[^\/]$"
         />
-        <label for="folder_name">Folder Name</label>
+        <label for="folder_name">{{ $t("label.folder_name") }}</label>
       </div>
     </div>
     <div class="card-action" style="display: flow-root">
@@ -69,13 +69,13 @@ export default {
   methods: {
     async createFolder(folderName) {
       if (!folderName) {
-        errorMessage('フォルダ名が未入力です。')
+        errorMessage(this.$t("message.empty_folder_name"))
         return
       }
 
       if (folderName.endsWith('/')) {
         // TODO: 自動で末尾"/"を削除する(再帰的に削除)
-        errorMessage('末尾のスラッシュを削除してください。')
+        errorMessage(this.$t("message.trailing_slash"))
         return
       }
 
@@ -84,7 +84,7 @@ export default {
       folderName = this.path + folderName
 
       await Storage.put(folderName, null)
-      infoMessage('フォルダを作成しました。')
+      infoMessage(this.$t("message.folder_created"))
       this.$emit('uploaded')
     },
     fileUpload() {
@@ -105,7 +105,7 @@ export default {
 
           await Storage.put(uploadFilename, data)
 
-          infoMessage('ファイルをアップロードしました。')
+          infoMessage(vm.$t("message.file_uploaded"))
 
           // ファイル選択を初期化する
           document.getElementById('upload_file').value = ''

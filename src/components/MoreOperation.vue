@@ -23,19 +23,19 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
 
   <div :id="'delete-object-' + objectKey" class="modal card">
     <div class="card-content">
-      <span class="card-title">Delete File</span>
-      <p>{{ objectKey }} を削除します。</p>
+      <span class="card-title">{{ $t("dialog.title.delete") }}</span>
+      <p>{{ $t("dialog.confirm.delete", { key: objectKey }) }}</p>
     </div>
     <div class="card-action" style="display: flow-root">
       <button
         class="waves-effect waves-light blue-grey btn right modal-close"
         @click="deleteObject(objectKey)"
       >
-        Delete
+        {{ $t("dialog.button.delete") }}
       </button>
       <span class="right">&nbsp;</span>
       <button class="waves-effect waves-light blue-grey lighten-3 btn right modal-close">
-        Cancel
+        {{ $t("dialog.button.cancel") }}
       </button>
     </div>
   </div>
@@ -77,12 +77,12 @@ export default {
       const deleteObjectKey = () => {
         Storage.remove(objectKey)
           .then(() => {
-            infoMessage(`${objectKey} を削除しました。`)
+            infoMessage(vm.$t("message.deleted_object", { key: objectKey }))
             vm.$emit('updated')
           })
           .catch((err) => {
             console.error(err)
-            errorMessage('削除に失敗しました。')
+            errorMessage(vm.$t("message.delete_failed"))
           })
       }
       // 先に子オブジェクトを全て削除する
