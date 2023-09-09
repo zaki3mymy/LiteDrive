@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col s12">
-            <a href="/" class="brand-logo">serverless box</a>
+            <a href="/" class="brand-logo">{{ $t("title") }}</a>
             <div class="right">
               <button
                 class="waves-effect waves-light blue-grey btn hide-on-small-only"

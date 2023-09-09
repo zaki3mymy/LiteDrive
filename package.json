@@ -1,5 +1,5 @@
 {
-  "name": "serverlessbox",
+  "name": "litedrive",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -19,6 +19,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.29.4",
     "vue": "^3.3.4",
+    "vue-i18n": "^9.3.0",
     "vue-router": "^4.2.4"
   },
   "devDependencies": {

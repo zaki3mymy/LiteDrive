@@ -1,7 +1,7 @@
 {
-  "resourceName": "s38b924de4",
-  "policyUUID": "8b924de4",
-  "bucketName": "serverlessboxef0bd2505f5e46489a2b731333c327f3",
+  "resourceName": "s3505b56d3",
+  "policyUUID": "505b56d3",
+  "bucketName": "litedrive3f1c7e74f74048db80f127aebce5dbe4",
   "storageAccess": "auth",
   "guestAccess": [],
   "authAccess": [

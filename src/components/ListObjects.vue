@@ -8,10 +8,10 @@ import MoreOperation from './MoreOperation.vue'
     <thead>
       <tr>
         <th style="width: 10%; min-width: 30px"></th>
-        <th style="width: 50%">ファイル名</th>
+        <th style="width: 50%">{{ $t("table.filename") }}</th>
         <th style="width: 30%">
-          <span class="hide-on-small-only">更新日時</span>
-          <span class="hide-on-med-only show-on-small">更新日</span>
+          <span class="hide-on-small-only">{{ $t("table.update_datetime") }}</span>
+          <span class="hide-on-med-and-up show-on-small">{{ $t("table.update_date") }}</span>
         </th>
         <th style="width: 10%; min-width: 30px"></th>
       </tr>
