@@ -1,6 +1,6 @@
 # LiteDrive
 
-![image](https://github.com/zaki3mymy/LiteDrive/assets/91773180/56fbd33e-0b57-4277-b852-f18bb8259ca0)
+![image](https://github.com/zaki3mymy/LiteDrive/assets/91773180/53ffdb19-fbf8-4dbf-888b-29e6702c6b71)
 
 LiteDrive is a file storage application using Amazon S3.
 
