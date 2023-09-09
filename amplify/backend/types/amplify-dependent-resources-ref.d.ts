@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "litedrive8154d63f": {
+    "litedrive8179c2ea": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
       "IdentityPoolId": "string",
@@ -11,7 +11,7 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "storage": {
-    "s3505b56d3": {
+    "s34c999d02": {
       "BucketName": "string",
       "Region": "string"
     }
