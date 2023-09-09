@@ -1,6 +1,6 @@
 const messages = {
   "ja": {
-    "title": "serverlessbox",
+    "title": "LiteDrive",
     "table": {
       "filename": "ファイル名",
       "update_datetime": "更新日時",
@@ -33,7 +33,7 @@ const messages = {
     }
   },
   "en": {
-    "title": "serverlessbox",
+    "title": "LiteDrive",
     "table": {
       "filename": "Filename",
       "update_datetime": "Update datetime",
