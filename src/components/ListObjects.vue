@@ -11,7 +11,7 @@ import MoreOperation from './MoreOperation.vue'
         <th style="width: 50%">{{ $t("table.filename") }}</th>
         <th style="width: 30%">
           <span class="hide-on-small-only">{{ $t("table.update_datetime") }}</span>
-          <span class="hide-on-med-only show-on-small">{{ $t("table.update_date") }}</span>
+          <span class="hide-on-med-and-up show-on-small">{{ $t("table.update_date") }}</span>
         </th>
         <th style="width: 10%; min-width: 30px"></th>
       </tr>
