@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3505b56d3",
+  "policyUUID": "505b56d3",
+  "bucketName": "litedrive3f1c7e74f74048db80f127aebce5dbe4",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}
