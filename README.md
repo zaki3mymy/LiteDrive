@@ -46,7 +46,7 @@ amplify push
 
 ## Usage
 
-First, add a user to Cognito User Pools (named LiteDriveXXXXXXXX_userpool_XXXXXXXX-dev).
+First, add a user to Cognito User Pools (named litedriveXXXXXXXX_userpool_XXXXXXXX-dev).
 
 Next, run the command below to access http://localhost:8080 and sign in.
 
@@ -65,7 +65,7 @@ If you want to deploy as a production environment, execute the following command
 $ amplify hosting add
 
 √ Select the plugin module to execute · Amazon CloudFront and S3
-√ hosting bucket name · LiteDrive-yyyymmddhhMMss-hostingbucket
+√ hosting bucket name · iterive-yyyymmddhhMMss-hostingbucket
 Static webhosting is disabled for the hosting bucket when CloudFront Distribution is enabled.
 
 You can now publish your app using the following command:
