@@ -48,15 +48,31 @@ export default {
       if (path.startsWith('/')) path = path.slice(1)
 
       this.isFetching = true
-      const config = {
-        // TODO: paging
-        // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
-        pageSize: 'ALL'
+
+      let nextToken = undefined
+      let hasNextPage = true
+      let results = []
+      while (hasNextPage) {
+        const config = {
+          // https://docs.amplify.aws/lib/storage/list/q/platform/js/#paginated-file-access
+          pageSize: 'ALL',
+          nextToken: nextToken
+        }
+        const response = await Storage.list(path, config)
+        response.results.forEach((result) => {
+          results.push(result)
+        })
+
+        if (response.hasNextToken) {
+          nextToken = response.nextToken
+        } else {
+          nextToken = undefined
+          hasNextPage = false
+        }
       }
-      const response = await Storage.list(path, config)
 
       this.path = path
-      this.results = response.results
+      this.results = results
 
       this.isFetching = false
     }
