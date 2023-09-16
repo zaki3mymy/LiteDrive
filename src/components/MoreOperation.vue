@@ -1,6 +1,7 @@
 <script setup>
 import { Storage } from 'aws-amplify'
 import { infoMessage, errorMessage } from './util/Toast.vue'
+import PreLoader from './util/PreLoader.vue'
 </script>
 
 <template>
@@ -14,12 +15,30 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
         <i class="material-icons">download</i>download
       </a>
     </li>
+    <li v-if="!objectKey.endsWith('/')">
+      <a class="black-text modal-trigger" :href="'#copy-link-' + objectKey" @click="copyUrl(objectKey)">
+        <i class="material-icons">link</i>copy link
+      </a>
+    </li>
     <li>
       <a class="black-text modal-trigger" :href="'#delete-object-' + objectKey">
         <i class="material-icons">delete</i>delete
       </a>
     </li>
   </ul>
+
+  <div :id="'copy-link-' + objectKey" class="modal card">
+    <div class="card-content">
+      <span class="card-title">リンクのコピー</span>
+      <div v-show="isLoading">
+        <PreLoader></PreLoader>
+      </div>
+      <div v-show="!isLoading">
+        <p>{{ objectKey }} のリンクをコピーしました。</p>
+        <input :id="'copy-link-value-' + objectKey" />
+      </div>
+    </div>
+  </div>
 
   <div :id="'delete-object-' + objectKey" class="modal card">
     <div class="card-content">
@@ -47,6 +66,11 @@ import M from 'materialize-css'
 export default {
   props: ['objectKey'],
   emits: ['updated'],
+  data() {
+    return {
+      isLoading: false
+    }
+  },
   methods: {
     downloadObject(objectKey) {
       Storage.get(objectKey, { download: true }).then((result) => {
@@ -69,6 +93,21 @@ export default {
           a.addEventListener('click', clickHandler, false)
           a.click()
         }
+      })
+    },
+    copyUrl(objectKey) {
+      const vm = this
+      vm.isLoading = true
+      Storage.get(objectKey).then((result) => {
+        const elem = document.getElementById(`copy-link-value-${objectKey}`)
+        elem.value = result
+        elem.addEventListener("click", () => {
+          elem.focus()
+          elem.select()
+          document.execCommand("copy")
+        })
+
+        vm.isLoading = false
       })
     },
     deleteObject(objectKey) {
