@@ -29,12 +29,12 @@ import PreLoader from './util/PreLoader.vue'
 
   <div :id="'copy-link-' + objectKey" class="modal card">
     <div class="card-content">
-      <span class="card-title">リンクのコピー</span>
+      <span class="card-title">{{ $t("dialog.title.shared_link") }}</span>
       <div v-show="isLoading">
         <PreLoader></PreLoader>
       </div>
       <div v-show="!isLoading">
-        <p>{{ objectKey }} のリンクをコピーしました。</p>
+        <p>{{ $t("message.copy_shared_link", { key: objectKey }) }}</p>
         <input :id="'copy-link-value-' + objectKey" />
       </div>
     </div>
