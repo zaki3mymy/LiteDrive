@@ -105,6 +105,7 @@ export default {
           elem.focus()
           elem.select()
           document.execCommand("copy")
+          infoMessage("Copied!")
         })
 
         vm.isLoading = false
