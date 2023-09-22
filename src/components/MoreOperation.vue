@@ -73,10 +73,16 @@ export default {
   },
   methods: {
     downloadObject(objectKey) {
-      Storage.get(objectKey, { download: true }).then((result) => {
+      Storage.get(objectKey, { download: true }).then(async (result) => {
         // ダウンロード処理
         if (result.Body) {
-          const blob = result.Body
+          console.debug("result:", result)
+          const typeOfBody = Object.prototype.toString.call(result.Body)
+          console.debug("type:", typeOfBody)
+          // XXX: デプロイするとなぜか ReadableStream になる……
+          const isReadableStream = typeOfBody == "[object ReadableStream]";
+          const blob = isReadableStream ? await new Response(result.Body).blob() : result.Body
+
           const url = URL.createObjectURL(blob)
           const a = document.createElement('a')
           a.href = url
