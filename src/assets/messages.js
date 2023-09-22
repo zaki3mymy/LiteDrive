@@ -10,7 +10,8 @@ const messages = {
       "title": {
         "create_folder": "フォルダ作成",
         "delete": "削除",
-        "shared_link": "共有リンク"
+        "shared_link": "共有リンク",
+        "downloading": "ダウンロード中です……"
       },
       "confirm": {
         "delete": "{key} を削除します。"
@@ -45,7 +46,8 @@ const messages = {
       "title": {
         "create_folder": "Create Folder",
         "delete": "Delete",
-        "shared_link": "Shared link"
+        "shared_link": "Shared link",
+        "downloading": "Now downloading……"
       },
       "confirm": {
         "delete": "Delete {key}."

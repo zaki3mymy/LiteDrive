@@ -2,6 +2,7 @@
 import { Storage } from 'aws-amplify'
 import { infoMessage, errorMessage } from './util/Toast.vue'
 import PreLoader from './util/PreLoader.vue'
+import ProgressBar from './util/ProgressBar.vue'
 </script>
 
 <template>
@@ -58,6 +59,7 @@ import PreLoader from './util/PreLoader.vue'
       </button>
     </div>
   </div>
+  <ProgressBar :objectKey="objectKey" :progress="progress" ref="progressBar"></ProgressBar>
 </template>
 
 <script>
@@ -68,12 +70,19 @@ export default {
   emits: ['updated'],
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      progress: 0,
     }
   },
   methods: {
     downloadObject(objectKey) {
-      Storage.get(objectKey, { download: true }).then(async (result) => {
+      this.progress = 0
+      this.$refs.progressBar.open();
+
+      const progressCallback = (progress) => {
+        this.progress = Math.round((progress.loaded / progress.total) * 100)
+      }
+      Storage.get(objectKey, { download: true, progressCallback }).then(async (result) => {
         // ダウンロード処理
         if (result.Body) {
           console.debug("result:", result)
@@ -94,6 +103,10 @@ export default {
             setTimeout(() => {
               URL.revokeObjectURL(url)
               a.removeEventListener('click', clickHandler)
+
+              // close progressbar
+              this.progress = 0
+              this.$refs.progressBar.close();
             }, 150)
           }
           a.addEventListener('click', clickHandler, false)
