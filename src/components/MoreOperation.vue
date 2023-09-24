@@ -59,7 +59,7 @@ import ProgressBar from './util/ProgressBar.vue'
       </button>
     </div>
   </div>
-  <ProgressBar :objectKey="objectKey" :progress="progress" ref="progressBar"></ProgressBar>
+  <ProgressBar :objectKey="objectKey" :progress="progress" :message="$t('progress.downloading')" ref="progressBar"></ProgressBar>
 </template>
 
 <script>

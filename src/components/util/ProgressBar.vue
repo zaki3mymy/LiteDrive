@@ -1,7 +1,7 @@
 <template>
   <div :id="'progress-modal-' + objectKey" class="modal">
     <div class="modal-content">
-      <p>{{ $t("dialog.title.downloading") }}</p>
+      <p>{{ message }}</p>
       <div class="progress">
         <div class="determinate" :style="{ width: progress + '%' }"></div>
       </div>
@@ -13,7 +13,7 @@
 import M from 'materialize-css'
 
 export default {
-  props: ['objectKey', 'progress'],
+  props: ['objectKey', 'progress', "message"],
   data() {
     return {
       instance: null

@@ -11,7 +11,6 @@ const messages = {
         "create_folder": "フォルダ作成",
         "delete": "削除",
         "shared_link": "共有リンク",
-        "downloading": "ダウンロード中です……"
       },
       "confirm": {
         "delete": "{key} を削除します。"
@@ -21,6 +20,10 @@ const messages = {
         "delete": "削除",
         "cancel": "キャンセル",
       }
+    },
+    "progress": {
+      "downloading": "ダウンロード中です……",
+      "uploading": "アップロード中です……",
     },
     "message": {
       "empty_folder_name": "フォルダ名が未入力です。",
@@ -47,7 +50,6 @@ const messages = {
         "create_folder": "Create Folder",
         "delete": "Delete",
         "shared_link": "Shared link",
-        "downloading": "Now downloading……"
       },
       "confirm": {
         "delete": "Delete {key}."
@@ -57,6 +59,10 @@ const messages = {
         "delete": "Delete",
         "cancel": "Cancel",
       }
+    },
+    "progress": {
+      "downloading": "Now downloading……",
+      "uploading": "Now uploading……",
     },
     "message": {
       "empty_folder_name": "Folder name is empty.",
