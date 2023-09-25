@@ -2,8 +2,8 @@
   <div :id="'progress-modal-' + objectKey" class="modal">
     <div class="modal-content">
       <p>{{ message }}</p>
-      <div class="progress">
-        <div class="determinate" :style="{ width: progress + '%' }"></div>
+      <div class="progress blue-grey lighten-3">
+        <div class="determinate blue-grey" :style="{ width: progress + '%' }"></div>
       </div>
     </div>
   </div>
