@@ -47,6 +47,8 @@ export default {
       // パスの最初のスラッシュを削除
       if (path.startsWith('/')) path = path.slice(1)
 
+      path = decodeURI(path)
+
       this.isFetching = true
 
       let nextToken = undefined
