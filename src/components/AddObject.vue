@@ -1,6 +1,7 @@
 <script setup>
 import { Storage } from 'aws-amplify'
 import { infoMessage, errorMessage } from './util/Toast.vue'
+import ProgressBar from './util/ProgressBar.vue'
 </script>
 
 <template>
@@ -53,6 +54,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
       </button>
     </div>
   </div>
+  <ProgressBar :objectKey="'uploading'" :progress="progress" :message="$t('progress.uploading')" ref="progressBar"></ProgressBar>
 </template>
 
 <script>
@@ -63,7 +65,8 @@ export default {
   emits: ['uploaded'],
   data() {
     return {
-      folderName: ''
+      folderName: '',
+      progress: 0,
     }
   },
   methods: {
@@ -97,13 +100,20 @@ export default {
 
       const selectedFile = event.target.files[0]
       if (selectedFile) {
+        this.progress = 0
+        this.$refs.progressBar.open();
+        const progressCallback = (progress) => {
+          this.progress = Math.round((progress.loaded / progress.total) * 100)
+        }
         const uploadFilename = this.path + selectedFile.name
 
         const reader = new FileReader()
         reader.onload = async function (e) {
           const data = new Uint8Array(e.target.result)
 
-          await Storage.put(uploadFilename, data)
+          await Storage.put(uploadFilename, data, { progressCallback })
+          vm.progress = 0
+          vm.$refs.progressBar.close();
 
           infoMessage(vm.$t("message.file_uploaded"))
 
