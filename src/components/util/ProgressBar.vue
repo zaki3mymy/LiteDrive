@@ -3,7 +3,9 @@
     <div class="modal-content">
       <p>{{ message }}</p>
       <div class="progress blue-grey lighten-3">
-        <div class="determinate blue-grey" :style="{ width: progress + '%' }"></div>
+        <!-- Determinate progress bar cannot be used due to https://github.com/zaki3mymy/LiteDrive/issues/21 -->
+        <!-- <div class="determinate blue-grey" :style="{ width: progress + '%' }"></div> -->
+        <div class="indeterminate blue-grey" ></div>
       </div>
     </div>
   </div>
