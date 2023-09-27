@@ -9,7 +9,8 @@ const messages = {
     "dialog": {
       "title": {
         "create_folder": "フォルダ作成",
-        "delete": "削除"
+        "delete": "削除",
+        "shared_link": "共有リンク",
       },
       "confirm": {
         "delete": "{key} を削除します。"
@@ -20,13 +21,18 @@ const messages = {
         "cancel": "キャンセル",
       }
     },
+    "progress": {
+      "downloading": "ダウンロード中です……",
+      "uploading": "アップロード中です……",
+    },
     "message": {
       "empty_folder_name": "フォルダ名が未入力です。",
       "trailing_slash": "末尾のスラッシュを削除してください。",
       "folder_created": "フォルダを作成しました。",
       "file_uploaded": "ファイルをアップロードしました。",
       "deleted_object": "{key} を削除しました。",
-      "delete_failed": "削除に失敗しました。"
+      "delete_failed": "削除に失敗しました。",
+      "copy_shared_link": "{key} のリンクをコピーしました。"
     },
     "label": {
       "folder_name": "フォルダ名"
@@ -42,7 +48,8 @@ const messages = {
     "dialog": {
       "title": {
         "create_folder": "Create Folder",
-        "delete": "Delete"
+        "delete": "Delete",
+        "shared_link": "Shared link",
       },
       "confirm": {
         "delete": "Delete {key}."
@@ -53,13 +60,18 @@ const messages = {
         "cancel": "Cancel",
       }
     },
+    "progress": {
+      "downloading": "Now downloading……",
+      "uploading": "Now uploading……",
+    },
     "message": {
       "empty_folder_name": "Folder name is empty.",
       "trailing_slash": "Remove the trailing slash.",
       "folder_created": "Folder created.",
       "file_uploaded": "File uploaded.",
       "deleted_object": "{key} deleted.",
-      "delete_failed": "Failed to delete."
+      "delete_failed": "Failed to delete.",
+      "copy_shared_link": "Copied shared link of {key}."
     },
     "label": {
       "folder_name": "Folder Name"

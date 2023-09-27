@@ -1,6 +1,8 @@
 <script setup>
 import { Storage } from 'aws-amplify'
 import { infoMessage, errorMessage } from './util/Toast.vue'
+import PreLoader from './util/PreLoader.vue'
+import ProgressBar from './util/ProgressBar.vue'
 </script>
 
 <template>
@@ -14,12 +16,30 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
         <i class="material-icons">download</i>download
       </a>
     </li>
+    <li v-if="!objectKey.endsWith('/')">
+      <a class="black-text modal-trigger" :href="'#copy-link-' + objectKey" @click="copyUrl(objectKey)">
+        <i class="material-icons">link</i>copy link
+      </a>
+    </li>
     <li>
       <a class="black-text modal-trigger" :href="'#delete-object-' + objectKey">
         <i class="material-icons">delete</i>delete
       </a>
     </li>
   </ul>
+
+  <div :id="'copy-link-' + objectKey" class="modal card">
+    <div class="card-content">
+      <span class="card-title">{{ $t("dialog.title.shared_link") }}</span>
+      <div v-show="isLoading">
+        <PreLoader></PreLoader>
+      </div>
+      <div v-show="!isLoading">
+        <p>{{ $t("message.copy_shared_link", { key: objectKey }) }}</p>
+        <input :id="'copy-link-value-' + objectKey" />
+      </div>
+    </div>
+  </div>
 
   <div :id="'delete-object-' + objectKey" class="modal card">
     <div class="card-content">
@@ -39,6 +59,7 @@ import { infoMessage, errorMessage } from './util/Toast.vue'
       </button>
     </div>
   </div>
+  <ProgressBar :objectKey="objectKey" :progress="progress" :message="$t('progress.downloading')" ref="progressBar"></ProgressBar>
 </template>
 
 <script>
@@ -47,9 +68,21 @@ import M from 'materialize-css'
 export default {
   props: ['objectKey'],
   emits: ['updated'],
+  data() {
+    return {
+      isLoading: false,
+      progress: 0,
+    }
+  },
   methods: {
     downloadObject(objectKey) {
-      Storage.get(objectKey, { download: true }).then(async (result) => {
+      this.progress = 0
+      this.$refs.progressBar.open();
+
+      const progressCallback = (progress) => {
+        this.progress = Math.round((progress.loaded / progress.total) * 100)
+      }
+      Storage.get(objectKey, { download: true, progressCallback }).then(async (result) => {
         // ダウンロード処理
         if (result.Body) {
           console.debug("result:", result)
@@ -70,11 +103,31 @@ export default {
             setTimeout(() => {
               URL.revokeObjectURL(url)
               a.removeEventListener('click', clickHandler)
+
+              // close progressbar
+              this.progress = 0
+              this.$refs.progressBar.close();
             }, 150)
           }
           a.addEventListener('click', clickHandler, false)
           a.click()
         }
+      })
+    },
+    copyUrl(objectKey) {
+      const vm = this
+      vm.isLoading = true
+      Storage.get(objectKey).then((result) => {
+        const elem = document.getElementById(`copy-link-value-${objectKey}`)
+        elem.value = result
+        elem.addEventListener("click", () => {
+          elem.focus()
+          elem.select()
+          document.execCommand("copy")
+          infoMessage("Copied!")
+        })
+
+        vm.isLoading = false
       })
     },
     deleteObject(objectKey) {
