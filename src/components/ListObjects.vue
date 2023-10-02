@@ -132,6 +132,13 @@ export default {
   },
   watch: {
     results(newValue) {
+      // ツールチップが更新のたびに増えてしまうため明示的に削除
+      const elems = document.querySelectorAll('.tooltipped');
+      const instances = M.Tooltip.init(elems, {});
+      instances.forEach((instance) => {
+        instance.destroy()
+      })
+      // 更新
       this.listObjects(this.path, newValue)
     }
   }
