@@ -48,7 +48,7 @@ import ProgressBar from './util/ProgressBar.vue'
     </div>
     <div class="card-action" style="display: flow-root">
       <button
-        class="waves-effect waves-light blue-grey btn right modal-close"
+        class="waves-effect waves-light red lighten-1 btn right modal-close"
         @click="deleteObject(objectKey)"
       >
         {{ $t("dialog.button.delete") }}
