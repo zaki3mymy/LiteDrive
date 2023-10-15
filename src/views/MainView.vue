@@ -4,6 +4,7 @@ import BreadcrumbList from '../components/BreadcrumbList.vue'
 import ListObjects from '../components/ListObjects.vue'
 import AddObject from '../components/AddObject.vue'
 import PreLoader from '../components/util/PreLoader.vue'
+import PreviewObject from '../components/PreviewObject.vue'
 </script>
 <template>
   <div class="container">
@@ -16,10 +17,15 @@ import PreLoader from '../components/util/PreLoader.vue'
     </div>
     <div class="row">
       <div class="col s12">
-        <div v-show="isFetching">
-          <PreLoader></PreLoader>
+        <div v-if="isPreview">
+          <PreviewObject></PreviewObject>
         </div>
-        <ListObjects v-show="!isFetching" :path="path" :results="results" @updated="refresh(path)"></ListObjects>
+        <div v-else>
+          <div v-show="isFetching">
+            <PreLoader></PreLoader>
+          </div>
+          <ListObjects v-show="!isFetching" :path="path" :results="results" @updated="refresh(path)"></ListObjects>
+        </div>
       </div>
     </div>
     <AddObject :path="path" @uploaded="refresh(path)"></AddObject>
@@ -39,7 +45,8 @@ export default {
     return {
       path: String,
       results: [],
-      isFetching: false
+      isFetching: false,
+      isPreview: false,
     }
   },
   methods: {
@@ -86,7 +93,14 @@ export default {
   watch: {
     $route(to) {
       // パス変更時のイベント
-      this.refresh(to.path)
+      const query = this.$route.query
+      console.log(query)
+      if (this.$route.query.preview) {
+        this.isPreview = true
+      } else {
+        this.isPreview = false
+        this.refresh(to.path)
+      }
     }
   }
 }
