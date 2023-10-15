@@ -13,7 +13,9 @@ import PreLoader from '../components/util/PreLoader.vue'
             <PreLoader></PreLoader>
           </div>
           <div v-show="!isLoading">
-            <img :src="objectSrc" v-on:load="isLoading = false"/>
+            <img v-if="isImage()" :src="objectSrc" v-on:load="isLoading = false"/>
+            <audio v-else-if="isAudio()" controls :src="objectSrc" v-on:loadeddata="isLoading = false"></audio>
+            <p v-else-if="isElse()">preview未対応</p>
           </div>
         </div>
       </div>
@@ -28,6 +30,7 @@ export default {
       objectSrc: "",
       isLoading: true,
       filename: "",
+      fileExt: "",
     }
   },
   methods: {
@@ -43,13 +46,25 @@ export default {
         .catch((err) => {
           console.error(err)
         })
-    }
+    },
+    isImage() {
+      return this.fileExt == ".jpg" || this.fileExt == ".png" || this.fileExt == ".gif"
+    },
+    isAudio() {
+      return this.fileExt == ".wav" || this.fileExt == ".mp3"
+    },
+    isElse() {
+      this.isLoading = false
+      return true
+    },
   },
   mounted() {
     this.isLoading = true
 
     const filename = this.$route.query.preview
     this.filename = filename
+    this.fileExt = "." + filename.split(".").pop()
+
     const path = this.path == '' ? this.path + '/' : this.path
     const objectKey = `${path}${filename}`
     this.preview(objectKey)
