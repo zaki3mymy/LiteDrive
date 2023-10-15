@@ -18,7 +18,7 @@ import PreviewObject from '../components/PreviewObject.vue'
     <div class="row">
       <div class="col s12">
         <div v-if="isPreview">
-          <PreviewObject></PreviewObject>
+          <PreviewObject :path="path"></PreviewObject>
         </div>
         <div v-else>
           <div v-show="isFetching">
@@ -93,8 +93,6 @@ export default {
   watch: {
     $route(to) {
       // パス変更時のイベント
-      const query = this.$route.query
-      console.log(query)
       if (this.$route.query.preview) {
         this.isPreview = true
       } else {
