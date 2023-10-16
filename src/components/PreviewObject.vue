@@ -13,6 +13,9 @@ import PreLoader from '../components/util/PreLoader.vue'
             <PreLoader v-show="isLoading"></PreLoader>
             <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
             <audio v-else-if="isAudio()" controls :src="objectSrc"></audio>
+            <div v-else-if="isText()" class="input-field card-panel">
+              <textarea id="textarea" :value="fileContent" readonly class="materialize-textarea"></textarea>
+            </div>
             <p v-else-if="isElse()">preview未対応</p>
           </div>
         </div>
@@ -21,6 +24,8 @@ import PreLoader from '../components/util/PreLoader.vue'
   </div>
 </template>
 <script>
+import M from 'materialize-css'
+
 export default {
   props: ['path'],
   data() {
@@ -29,6 +34,7 @@ export default {
       isLoading: true,
       filename: "",
       fileExt: "",
+      fileContent: "",
     }
   },
   methods: {
@@ -36,9 +42,6 @@ export default {
       const key = objectKey.startsWith('/') ? objectKey.slice(1) : objectKey
       Storage.get(key, { download: false })
         .then((result) => {
-          console.log(result)
-          const contentType = result.headers;
-          console.log(contentType)
           this.objectSrc = result
         })
         .catch((err) => {
@@ -51,6 +54,27 @@ export default {
     isAudio() {
       if (this.fileExt == ".wav" || this.fileExt == ".mp3") {
         this.isLoading = false
+        return true
+      } else {
+        return false
+      }
+    },
+    isText() {
+      if (this.fileExt == ".txt" || this.fileExt == ".md" || this.fileExt == ".csv") {
+        fetch(this.objectSrc).then((response) => {
+          response.text().then(text => {
+            this.fileContent = text
+
+            const textarea = document.getElementById("textarea")
+            M.textareaAutoResize(textarea)
+            // for auto resize
+            textarea.dispatchEvent(new KeyboardEvent("keydown"), {
+              key: "Enter"
+            })
+
+            this.isLoading = false
+          })
+        })
         return true
       } else {
         return false
