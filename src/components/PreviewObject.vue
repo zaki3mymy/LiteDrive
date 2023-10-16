@@ -13,6 +13,7 @@ import PreLoader from '../components/util/PreLoader.vue'
             <PreLoader v-show="isLoading"></PreLoader>
             <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
             <audio v-else-if="isAudio()" controls :src="objectSrc"></audio>
+            <video v-else-if="isVideo()" controls :src="objectSrc"></video>
             <div v-else-if="isText()" class="input-field card-panel">
               <textarea id="textarea" :value="fileContent" readonly class="materialize-textarea"></textarea>
             </div>
@@ -53,6 +54,14 @@ export default {
     },
     isAudio() {
       if (this.fileExt == ".wav" || this.fileExt == ".mp3") {
+        this.isLoading = false
+        return true
+      } else {
+        return false
+      }
+    },
+    isVideo() {
+      if (this.fileExt == ".mp4") {
         this.isLoading = false
         return true
       } else {
