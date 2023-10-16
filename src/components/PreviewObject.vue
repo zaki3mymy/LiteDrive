@@ -3,6 +3,19 @@ import { Storage } from 'aws-amplify'
 import PreLoader from '../components/util/PreLoader.vue'
 </script>
 
+<style>
+img {
+  max-width: 100%;
+}
+audio {
+  min-width: 100%;
+  max-width: 100%;
+}
+video {
+  max-width: 100%;
+}
+</style>
+
 <template>
   <div class="container">
     <div class="row">
@@ -11,7 +24,7 @@ import PreLoader from '../components/util/PreLoader.vue'
           <p>{{ filename }}</p>
           <div>
             <PreLoader v-show="isLoading"></PreLoader>
-            <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
+            <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false"/>
             <audio v-else-if="isAudio()" controls :src="objectSrc"></audio>
             <video v-else-if="isVideo()" controls :src="objectSrc"></video>
             <div v-else-if="isText()" class="input-field card-panel">
