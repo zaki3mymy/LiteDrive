@@ -24,11 +24,21 @@ video {
           <p>{{ filename }}</p>
           <div>
             <PreLoader v-show="isLoading"></PreLoader>
-            <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false"/>
+            <img
+              v-if="isImage()"
+              v-show="!isLoading"
+              :src="objectSrc"
+              v-on:load="isLoading = false"
+            />
             <audio v-else-if="isAudio()" controls :src="objectSrc"></audio>
             <video v-else-if="isVideo()" controls :src="objectSrc"></video>
             <div v-else-if="isText()" class="input-field card-panel">
-              <textarea id="textarea" :value="fileContent" readonly class="materialize-textarea"></textarea>
+              <textarea
+                id="textarea"
+                :value="fileContent"
+                readonly
+                class="materialize-textarea"
+              ></textarea>
             </div>
             <p v-else-if="isElse()">preview未対応</p>
           </div>
@@ -44,11 +54,11 @@ export default {
   props: ['path'],
   data() {
     return {
-      objectSrc: "",
+      objectSrc: '',
       isLoading: true,
-      filename: "",
-      fileExt: "",
-      fileContent: "",
+      filename: '',
+      fileExt: '',
+      fileContent: ''
     }
   },
   methods: {
@@ -63,10 +73,10 @@ export default {
         })
     },
     isImage() {
-      return this.fileExt == ".jpg" || this.fileExt == ".png" || this.fileExt == ".gif"
+      return this.fileExt == '.jpg' || this.fileExt == '.png' || this.fileExt == '.gif'
     },
     isAudio() {
-      if (this.fileExt == ".wav" || this.fileExt == ".mp3") {
+      if (this.fileExt == '.wav' || this.fileExt == '.mp3') {
         this.isLoading = false
         return true
       } else {
@@ -74,7 +84,7 @@ export default {
       }
     },
     isVideo() {
-      if (this.fileExt == ".mp4") {
+      if (this.fileExt == '.mp4') {
         this.isLoading = false
         return true
       } else {
@@ -82,16 +92,16 @@ export default {
       }
     },
     isText() {
-      if (this.fileExt == ".txt" || this.fileExt == ".md" || this.fileExt == ".csv") {
+      if (this.fileExt == '.txt' || this.fileExt == '.md' || this.fileExt == '.csv') {
         fetch(this.objectSrc).then((response) => {
-          response.text().then(text => {
+          response.text().then((text) => {
             this.fileContent = text
 
-            const textarea = document.getElementById("textarea")
+            const textarea = document.getElementById('textarea')
             M.textareaAutoResize(textarea)
             // for auto resize
-            textarea.dispatchEvent(new KeyboardEvent("keydown"), {
-              key: "Enter"
+            textarea.dispatchEvent(new KeyboardEvent('keydown'), {
+              key: 'Enter'
             })
 
             this.isLoading = false
@@ -105,18 +115,18 @@ export default {
     isElse() {
       this.isLoading = false
       return true
-    },
+    }
   },
   mounted() {
     this.isLoading = true
 
     const filename = this.$route.query.preview
     this.filename = filename
-    this.fileExt = "." + filename.split(".").pop()
+    this.fileExt = '.' + filename.split('.').pop()
 
     const path = this.path == '' ? this.path + '/' : this.path
     const objectKey = `${path}${filename}`
     this.preview(objectKey)
-  },
+  }
 }
 </script>
