@@ -40,7 +40,7 @@ video {
                 class="materialize-textarea"
               ></textarea>
             </div>
-            <p v-else-if="isElse()">preview未対応</p>
+            <p v-else-if="isElse()">{{ $t("message.cannot_preview") }}</p>
           </div>
         </div>
       </div>
