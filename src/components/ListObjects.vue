@@ -30,7 +30,7 @@ import MoreOperation from './MoreOperation.vue'
       <tr v-for="file in files" :key="file.key">
         <td></td>
         <td>
-          {{ file.name }}
+          <router-link :to="('/' + file.key).replace('/' + file.name, '') + `?preview=${file.name}`">{{ file.name }}</router-link>
         </td>
         <td>
           <span class="hide-on-small-only">
@@ -132,6 +132,13 @@ export default {
   },
   watch: {
     results(newValue) {
+      // ツールチップが更新のたびに増えてしまうため明示的に削除
+      const elems = document.querySelectorAll('.tooltipped');
+      const instances = M.Tooltip.init(elems, {});
+      instances.forEach((instance) => {
+        instance.destroy()
+      })
+      // 更新
       this.listObjects(this.path, newValue)
     }
   }
