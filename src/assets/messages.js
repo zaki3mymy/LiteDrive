@@ -32,7 +32,8 @@ const messages = {
       "file_uploaded": "ファイルをアップロードしました。",
       "deleted_object": "{key} を削除しました。",
       "delete_failed": "削除に失敗しました。",
-      "copy_shared_link": "{key} のリンクをコピーしました。"
+      "copy_shared_link": "{key} のリンクをコピーしました。",
+      "cannot_preview": "プレビューできないファイルです。"
     },
     "label": {
       "folder_name": "フォルダ名"
@@ -71,7 +72,8 @@ const messages = {
       "file_uploaded": "File uploaded.",
       "deleted_object": "{key} deleted.",
       "delete_failed": "Failed to delete.",
-      "copy_shared_link": "Copied shared link of {key}."
+      "copy_shared_link": "Copied shared link of {key}.",
+      "cannot_preview": "Cannot preview this file."
     },
     "label": {
       "folder_name": "Folder Name"

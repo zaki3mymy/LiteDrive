@@ -30,7 +30,7 @@ import MoreOperation from './MoreOperation.vue'
       <tr v-for="file in files" :key="file.key">
         <td></td>
         <td>
-          {{ file.name }}
+          <router-link :to="('/' + file.key).replace('/' + file.name, '') + `?preview=${file.name}`">{{ file.name }}</router-link>
         </td>
         <td>
           <span class="hide-on-small-only">
