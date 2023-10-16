@@ -13,7 +13,7 @@ import PreLoader from '../components/util/PreLoader.vue'
             <PreLoader></PreLoader>
           </div>
           <div v-show="!isLoading">
-            <img v-if="isImage()" :src="objectSrc" v-on:load="isLoading = false"/>
+            <img v-if="isImage()" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
             <audio v-else-if="isAudio()" controls :src="objectSrc" v-on:loadeddata="isLoading = false"></audio>
             <p v-else-if="isElse()">preview未対応</p>
           </div>
