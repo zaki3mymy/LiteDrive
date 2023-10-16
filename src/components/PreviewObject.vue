@@ -9,12 +9,10 @@ import PreLoader from '../components/util/PreLoader.vue'
       <div class="col s12">
         <div class="center">
           <p>{{ filename }}</p>
-          <div v-show="isLoading">
-            <PreLoader></PreLoader>
-          </div>
-          <div v-show="!isLoading">
-            <img v-if="isImage()" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
-            <audio v-else-if="isAudio()" controls :src="objectSrc" v-on:loadeddata="isLoading = false"></audio>
+          <div>
+            <PreLoader v-show="isLoading"></PreLoader>
+            <img v-if="isImage()" v-show="!isLoading" :src="objectSrc" v-on:load="isLoading = false" style="max-width: 100%;"/>
+            <audio v-else-if="isAudio()" controls :src="objectSrc"></audio>
             <p v-else-if="isElse()">preview未対応</p>
           </div>
         </div>
@@ -51,7 +49,12 @@ export default {
       return this.fileExt == ".jpg" || this.fileExt == ".png" || this.fileExt == ".gif"
     },
     isAudio() {
-      return this.fileExt == ".wav" || this.fileExt == ".mp3"
+      if (this.fileExt == ".wav" || this.fileExt == ".mp3") {
+        this.isLoading = false
+        return true
+      } else {
+        return false
+      }
     },
     isElse() {
       this.isLoading = false
