@@ -28,7 +28,7 @@ import PreviewObject from '../components/PreviewObject.vue'
         </div>
       </div>
     </div>
-    <AddObject :path="path" @uploaded="refresh(path)"></AddObject>
+    <AddObject v-if="!isPreview" :path="path" @uploaded="refresh(path)"></AddObject>
   </div>
 </template>
 
